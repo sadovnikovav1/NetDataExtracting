@@ -1,5 +1,6 @@
 package ru.sstu.contractshandler.contracts.mmvb.futures;
 
+import org.exolab.castor.types.DateTime;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,10 +12,13 @@ import ru.sstu.contractshandler.db.services.ContentService;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.List;
 
 public class MMVBFuturesContract {
-    private static final String URL = "http://www.moex.com/ru/contract.aspx?code=MIX-12.17";
+    private static final String URL = "https://www.moex.com/ru/contract.aspx?code=MXM8";
     private WebDriver driver;
     private WebDriverWait webDriverWait;
     private Date date;
@@ -23,7 +27,6 @@ public class MMVBFuturesContract {
     private ContentService service;
 
     public MMVBFuturesContract() {
-        this.service = service;
         try {
             driver = new ChromeDriver();
         } catch (Exception ex) {
@@ -55,7 +58,7 @@ public class MMVBFuturesContract {
             try {
                 date = new Date(sdf.parse(driver.findElement(By.cssSelector("#digest_refresh_time")).getText()).getTime());
             } catch (ParseException e) {
-                e.printStackTrace();
+                date = new Date(Calendar.getInstance().getTimeInMillis());
             }
         }
     }

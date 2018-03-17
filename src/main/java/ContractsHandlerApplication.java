@@ -4,7 +4,10 @@ import ru.sstu.contractshandler.contracts.mmvb.futures.ExecutingPerTime;
 import ru.sstu.contractshandler.db.services.ContentService;
 import ru.sstu.contractshandler.gui.MainFrame;
 
+import javax.persistence.ManyToOne;
 import javax.swing.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 
 public class ContractsHandlerApplication {
@@ -26,7 +29,6 @@ public class ContractsHandlerApplication {
         }
         MainFrame frame = new MainFrame(service);
         frame.setVisible(true);
-
         ExecutingPerTime executingPerMinute = new ExecutingPerTime(service);
         timer.schedule(executingPerMinute, 0, 1000 * 60);
     }

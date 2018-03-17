@@ -33,12 +33,14 @@ public class ExecutingPerTime extends TimerTask {
     }
 
     public void run() {
-        contract = new MMVBFuturesContract();
         try {
+            contract = new MMVBFuturesContract();
             lastNote = getLastMINUTENote();
         } catch (NoSuchElementException ex) {
             execute(contract, TimeFrame.MINUTE);
             contract.closeSession();
+            return;
+        } catch (Exception ex) {
             return;
         }
 
