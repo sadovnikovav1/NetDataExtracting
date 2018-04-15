@@ -41,7 +41,7 @@ public class ExecutingPerTime extends TimerTask {
             contract.closeSession();
             return;
         } catch (Exception ex) {
-            return;
+            ex.printStackTrace();
         }
 
         execute(contract, TimeFrame.MINUTE);
@@ -71,13 +71,7 @@ public class ExecutingPerTime extends TimerTask {
         content.setDate(contract.getDate());
         content.setTimeFrame(timeFrame.toString());
         content.setCorrelation(setCorrelationForContent(content, timeFrame));
-        try {
-            if (!content.equals(getLastMINUTENote())) {
-                service.save(content);
-            }
-        } catch (NoSuchElementException ex) {
-            service.save(content);
-        }
+        service.save(content);
     }
 
     private double setCorrelationForContent(Content content, TimeFrame timeFrame) {
@@ -123,6 +117,7 @@ public class ExecutingPerTime extends TimerTask {
 
         sigmaX = Math.sqrt(temp / 9);
         sigmaY = Math.sqrt(temp2 / 9);
+
         double correlation = cov / (sigmaX * sigmaY);
 
         return correlation;
